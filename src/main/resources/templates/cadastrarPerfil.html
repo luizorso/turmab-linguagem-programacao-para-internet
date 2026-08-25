@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="${titulo}">Cadastro de Perfil</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form th:action="@{/cadastrarPerfil}"
+              th:object="${perfilDTO}"
+              method="post">
+            <h3 th:text="${titulo}">Cadastro de Perfil</h3>
+            <input type="hidden" th:field="*{id}">
+            <div>
+                <label for="nome">Nome</label>
+                <input type="text" 
+                       th:field="*{nome}" 
+                       id="nome"
+                       required>
+            </div>
+            <div>
+                <button type="submit"
+                    th:text="${perfilDTO.id != null ? 'Atualizar' : 'Cadastrar'}">
+                    Cadastrar
+                </button>
+            </div>
+            
+            
+        </form>
+    </body>
+</html>
