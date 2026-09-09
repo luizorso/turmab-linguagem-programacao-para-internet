@@ -3,7 +3,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${titulo}">Cadastro de Perfil</title>
-        <meta charset="UTdF-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" th:href="@{/styleForm.css}">
     </head>
@@ -25,6 +25,7 @@
                     th:text="${perfilDTO.id != null ? 'Atualizar' : 'Cadastrar'}">
                     Cadastrar
                 </button>
+                <a th:href="@{/perfis}">Cancelar</a>
             </div>
             
             

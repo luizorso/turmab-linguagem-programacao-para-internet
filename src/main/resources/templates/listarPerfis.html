@@ -1,57 +1,71 @@
 <!DOCTYPE html>
 
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://thymeleaf.org">
     <head>
-        <title>Listagem de Perfis</title>
+        <title>listarPerfis</title>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" th:href="@{styleListar.css}">
+        <meta name="viewport" 
+              content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" th:href="@{/styleListar.css}">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+       
     </head>
     <body>
         <div class="container">
-            <div th:if="${mensagem}" 
-                 style="color: green; font-weight: bold" >
+            <div th:if="${mensagem}" style="color: green; 
+                 font-weight: bold">
                 <p th:text="${mensagem}"></p>
-           </div>
-           <div class="header-actions">
-               <h3>Listagem de Perfis</h3>
-               <a th:href="@{/cadastrarPerfil}"
-                  class="btn-primary">
-                   Novo Perfil
-               </a>
-                
-           </div>
+            </div>
+            <div class="header-actions">
+                <h3>Listagem de Perfis</h3>
+                <a th:href="@{/cadastrarPerfil}"
+                   class="btn-primary">Novo Perfil
+                </a>
+            </div>
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
                             <th>Código</th>
                             <th>Nome</th>
-                            <th colspan="2">Ação</th>
+                            <th colspan="2">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr th:each="perfil : ${perfis}" 
+                        <tr th:each="perfil : ${perfis}"
                             th:if="${perfil != null}">
                             <td th:text="${perfil?.id}"></td>
                             <td th:text="${perfil?.nome}"></td>
                             <td>
-                                <a th:href="@{/perfis/editar/{id}(id=${perfil.id})}"
-                                   class="btn-action edit" title="Editar">
+                                <a th:href="@{/perfis/editar/{id} (id=${perfil.id})}"
+                                   class="btn-action edit"
+                                   title="Editar">
                                     <i class="bi bi-pencil-square"></i>
                                     Editar
                                 </a>
                             </td>
-                            <td></td>
+                            <!--Formulário apontando para a nova rota Post de exclusão -->
                             
+                            <td>
+                                <form th:action="@{/perfis/excluir/{id} (id=${perfil.id})}" 
+                                      method="post"
+                                      style="display:inline;">
+                                    <button type="submit"
+                                        title="Excluir"
+                                        onclick="return confirm('Tem certeza que deseja excluir este Perfil?');">
+                                        <i class="bi bi-trash"></i>
+                                        excluir
+                                    </button>
+                                </form>
+                                
+                            </td>
                         </tr>
-                                                
                     </tbody>
                 </table>
                 
                 
             </div>
+          
             
             
         </div>
