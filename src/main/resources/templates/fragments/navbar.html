@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+       
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <nav th:fragment="menu" class="navbar">
+            <ul class="menu-main">
+                <!--Mapeia para a rota do HomeController (@GetMapping('/') -->
+                <li><a th:href="@{/}">Início</a></li>
+                <!-- item principal: Perfil -->
+                <li class="has-submenu">
+                    <a href="#">Perfil<span class="arrow"></span></a>
+                    <ul class="submenu">
+                        <li>
+                            <a th:href="@{/perfis}">Listar Perfis</a>
+                        </li>
+                        <li>
+                            <a th:href="@{/cadastrarPerfil}">Novo Perfil</a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- Item Principal: Usuário -->
+                <li class="has-submenu">
+                    <a href="#">Usuario<span class="arrow"></span></a>
+                    <ul class="submenu">
+                        <li><a th:href="@{/usuarios}">Listar Usuários</a></li>
+                        <li><a th:href="@{/cadastrarUsuario}">Cadastrar Usuário</a></li>
+                    </ul>
+                    
+                </li>
+            </ul>
+        </nav>
+    </body>
+</html>

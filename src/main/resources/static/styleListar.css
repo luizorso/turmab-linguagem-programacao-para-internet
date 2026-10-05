@@ -1,4 +1,4 @@
-/* Reset básico e tipografia */
+/* Reset básico e tipografia páginas listar */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,21 +9,36 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f6f9;
     color: #333;
-    display: flex;
+    /* REMOVIDO o display: flex daqui para não alinhar a navbar de lado */
+    /*display: flex; */
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
-    padding: 40px 20px;
+    padding: 0;
 }
 
-/* Container principal da tabela */
+/* NOVO: Container que vai alinhar a tabela no 
+centro da tela abaixo da navbar */
+.main-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    width: 100%;
+}
+
+/* Container principal da tabela ajustado*/
 .container {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 800px;
+    max-width: 1000px;
+    /* Removido o margin-top excessivo
+    <*margin-top: 30px; *>
+    /* o container principal das páginas tenha uma margem superior 
+    para evitar sobreposição. */
 }
 
 /* Cabeçalho da página e botão Novo */

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://thymeleaf.org">
+    <head>
+        <title>Página Inicial</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Css da Navbar -->
+        <link rel="stylesheet" th:href="@{/navbar.css}">
+    </head>
+    <body>
+        <!-- Importação do menu Navbar -->
+        <div th:replace="~{fragments/navbar :: menu}"></div>
+    </body>
+</html>

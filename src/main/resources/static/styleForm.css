@@ -1,4 +1,4 @@
-/* Reset básico e tipografia */
+/* Reset básico e tipografia para formulário de cadastro */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,14 +9,24 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f6f9;
     color: #333;
+    /* Removido o display flex daqui */
+    /*display: flex; */
+    min-height: 100vh;
+    padding: 0;
+}
+
+/* NOVO: Container que vai centralizar o formulário na tela perfeitamente */
+.main-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: calc(100vh - 70px); 
+    /* Desconta o tamanho aproximado da navbar */
     padding: 20px;
+    width: 100%;
 }
 
-/* Container do formulário */
+/* Container do formulário ajustado*/
 form {
     background-color: #ffffff;
     padding: 30px;
@@ -24,6 +34,9 @@ form {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 450px; /* Garante boa legibilidade em telas grandes */
+    /* o container principal das páginas tenha uma margem superior 
+    para evitar sobreposição. */
+    /* removido o margin-top: 30px; */
 }
 
 /* Título */

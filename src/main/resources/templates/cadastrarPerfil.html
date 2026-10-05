@@ -6,8 +6,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" th:href="@{/styleForm.css}">
+           <!-- Css da Navbar -->
+        <link rel="stylesheet" th:href="@{/navbar.css}">
     </head>
     <body>
+        <!-- Importação do menu Navbar -->
+        <div th:replace="~{fragments/navbar :: menu}"></div>
+        
+        <div class="main-container">
         <form th:action="@{/cadastrarPerfil}"
               th:object="${perfilDTO}"
               method="post">
@@ -30,5 +36,6 @@
             
             
         </form>
+        </div>
     </body>
 </html>
