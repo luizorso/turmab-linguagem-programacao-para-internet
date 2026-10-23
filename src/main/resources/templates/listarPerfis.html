@@ -22,7 +22,7 @@
             </div>
             <div class="header-actions">
                 <h3>Listagem de Perfis</h3>
-                <a th:href="@{/cadastrarPerfil}"
+                <a th:href="@{/perfis/novo}"
                    class="btn-primary">Novo Perfil
                 </a>
             </div>
@@ -40,28 +40,28 @@
                             th:if="${perfil != null}">
                             <td th:text="${perfil?.id}"></td>
                             <td th:text="${perfil?.nome}"></td>
-                            <td>
-                                <a th:href="@{/perfis/editar/{id} (id=${perfil.id})}"
-                                   class="btn-action edit"
-                                   title="Editar">
-                                    <i class="bi bi-pencil-square"></i>
-                                    Editar
-                                </a>
-                            </td>
-                            <!--Formulário apontando para a nova rota Post de exclusão -->
-                            
-                            <td>
-                                <form th:action="@{/perfis/excluir/{id} (id=${perfil.id})}" 
-                                      method="post"
-                                      style="display:inline;">
-                                    <button type="submit"
-                                        title="Excluir"
-                                        onclick="return confirm('Tem certeza que deseja excluir este Perfil?');">
-                                        <i class="bi bi-trash"></i>
-                                        excluir
-                                    </button>
-                                </form>
-                                
+                            <!-- Container flexível para alinhar os botões lado a lado sem quebra -->
+                            <td class="col-acoes">
+                                <div class="actions-group">
+                                    <a th:href="@{/perfis/editar/{id} (id=${perfil.id})}"
+                                        class="btn-action edit"
+                                        title="Editar">
+                                            <i class="bi bi-pencil-square"></i>
+                                                Editar
+                                    </a>
+                                    <form th:action="@{/perfis/excluir/{id} (id=${perfil.id})}" 
+                                            method="post"
+                                            class="form-delete">
+                                        <button type="submit"
+                                            class="btn-action delete"
+                                            title="Excluir"
+                                            onclick="return confirm('Tem certeza que deseja excluir este Perfil?');">
+                                            <i class="bi bi-trash"></i>
+                                            excluir
+                                        </button>
+                                    </form>
+                                </div>
+                              
                             </td>
                         </tr>
                     </tbody>

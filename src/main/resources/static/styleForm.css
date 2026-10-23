@@ -30,8 +30,14 @@ form {
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 450px;
+    max-width: 750px; /* Aumentado de 450px para 750px para telas largas */
+    
+    /* Ativa o sistema de Grid dentro do formulário */
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Cria duas colunas de tamanhos iguais */
+    gap: 0 20px; /* 0 de espaço vertical (controlado pelo margin-bottom) e 20px horizontal */
 }
+
 
 /* Título */
 h3 {
@@ -177,4 +183,27 @@ select:focus {
     .btn-cancel {
         width: 100%;
     }
+}
+
+/* ==========================================================================
+   ADICIONE ESTAS NOVAS REGRAS NO FINAL DO SEU ARQUIVO STYLEFORM.CSS
+   ========================================================================== */
+
+/* Garante que o título e as ações ocupem as duas colunas do grid */
+h3, 
+.form-actions {
+    grid-column: span 2;
+}
+
+/* Classe utilitária para fazer um campo ocupar a linha inteira sozinho */
+.full-width {
+    grid-column: span 2;
+}
+
+/* Ajuste sutil para manter o alinhamento das mensagens de erro do Thymeleaf */
+.invalid-feedback {
+    grid-column: span 2;
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 4px;
 }

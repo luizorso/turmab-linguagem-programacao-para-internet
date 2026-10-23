@@ -3,6 +3,7 @@ package com.cepestm.turmab.repository;
 
 
 import com.cepestm.turmab.entity.Usuario;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,5 +14,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, UUID>{
         // - findAll() -> Retorna List<Usuario>    // - findAll() -> Retorna List<Usuario>    // - findAll() -> Retorna List<Usuario>
         // - delete(Usuario usuario) / deleteById(UUID id)    // - delete(Usuario usuario) / deleteById(UUID id)
         
+    // Método para buscar usuário pelo e-mail
+    Optional<Usuario> findByEmail(String email);
     
 }

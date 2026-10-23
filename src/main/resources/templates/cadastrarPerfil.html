@@ -16,17 +16,22 @@
         <div th:replace="~{fragments/navbar :: menu}"></div>
         
         <div class="main-container">
-        <form th:action="@{/cadastrarPerfil}"
+        <form th:action="@{/perfis/salvar}"
               th:object="${perfilDTO}"
               method="post">
             <h3 th:text="${titulo}">Cadastro de Perfil</h3>
             <input type="hidden" th:field="*{id}">
-            <div class="form-group">
+            <div class="form-group full-width">
                 <label for="nome">Nome</label>
                 <input type="text" 
                        th:field="*{nome}" 
                        id="nome"
-                       required>
+                       th:classAppend="${#fields.hasErrors('nome')}? 'is-invalid': ''">
+                <!--Exibe a mensagem de erro específica do campo Login -->
+                <div class="invalid-feedback"
+                     th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
+                    Erro no nome
+                </div>
             </div>
             <div class="form-actions">
                   <a th:href="@{/perfis}" class="btn-cancel">
@@ -35,7 +40,7 @@
                   </a>
                 <button type="submit" class="btn-submit">
                     <i class="bi bi-check-lg"></i>
-                    <span th:text="${perfilDTO.id != null ? 'Atualizar' : 'Cadastrar'}">
+                    <span th:text="${perfilDTO.id != null ? 'Atualizar' : 'Salvar'}">
                     </span>
                 </button>
               

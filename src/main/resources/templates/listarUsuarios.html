@@ -43,7 +43,8 @@
                                 <td th:text="${usuario.login}"></td>
                                 <td th:text="${usuario.email}"></td>
                                 <!-- Operador Ternário do Thymeleaf para o status -->
-                                <td th:text="${usuario.status} ? 'Ativo' : 'Inativo'"></td>
+                                <td th:class="${usuario.status} ? 'status-badge status-ativo' : 'status-badge status-inativo'" 
+                                    th:text="${usuario.status} ? 'Ativo' : 'Inativo'"></td>
                                 <!-- Container flexível para alinhar os botões lado a lado sem quebra -->
                                 <td class= "col-acoes">
                                     <!-- Contêiner flexível para alinhar os botões lado a lado sem quebra -->
@@ -51,7 +52,7 @@
                                         <!--editar -->
                                         <a th:href="@{/usuarios/editar/{id} (id=${usuario.id})}"
                                            class="btn-action edit"
-                                           title="Editar Usuário">
+                                           title="Editar">
                                             <i class="bi bi-pencil-square"></i>
                                             Editar
                                         </a>
@@ -61,7 +62,7 @@
                                               class="form-delete">
                                             <button type="submit" 
                                                 class="btn-action delete"
-                                                title="Excluir Usuário"
+                                                title="Excluir"
                                                 onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
                                                 <i class="bi bi-trash"></i>Excluir
                                             </button>

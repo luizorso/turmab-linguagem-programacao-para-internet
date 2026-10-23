@@ -3,6 +3,7 @@ package com.cepestm.turmab.dto;
 import com.cepestm.turmab.entity.Usuario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
@@ -55,7 +56,9 @@ public record UsuarioDTO(
     @Email(message = "Informe um e-mail válido!")
     @Size(min = 6, max = 100, message = "O e-mail deve ter entre 6 e 100 caracteres!")
     String email,
-    boolean status
+   
+   @NotNull(message = "O status é obrigatório!")
+    Boolean status
     ) 
 {
     //Construtor utilitário para cadastrar novos usuarios sem o ID

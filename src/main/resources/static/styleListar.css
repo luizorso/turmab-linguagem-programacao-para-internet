@@ -1,4 +1,6 @@
-/* Reset básico e tipografia páginas listar */
+/* ==========================================================================
+   Reset e Configurações Gerais
+   ========================================================================== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,212 +11,176 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f6f9;
     color: #333;
-    justify-content: center;
-    align-items: flex-start;
     min-height: 100vh;
-    padding: 0;
 }
 
-/* Container que vai alinhar a tabela no centro da tela abaixo da navbar */
+/* Container principal que alinha o conteúdo abaixo da navbar */
 .main-container {
+    padding: 30px 20px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 40px 20px;
-    width: 100%;
+    min-height: calc(100vh - 70px);
 }
 
-/* Container principal da tabela */
+/* O Cartão Branco que envelopa a listagem */
 .container {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     width: 100%;
-    max-width: 1000px;
+    max-width: 1200px; /* Largura ideal expandida para tabelas em desktop */
 }
 
-/* Cabeçalho da página e botão Novo */
+/* ==========================================================================
+   Cabeçalho da Listagem (Título e Botão Novo)
+   ========================================================================== */
 .header-actions {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
     border-bottom: 2px solid #e9ecef;
-    padding-bottom: 12px;
-    flex-wrap: wrap;
-    gap: 12px;
+    padding-bottom: 16px;
 }
 
-h3 {
+.header-actions h3 {
     color: #1a252f;
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 700;
 }
 
-/* Botão para novo cadastro */
+/* Botão "Novo Usuário" */
 .btn-primary {
-    display: inline-block;
-    padding: 10px 18px;
+    display: inline-flex;
+    align-items: center;
     background-color: #0d6efd;
     color: #ffffff;
-    text-decoration: none;
-    border-radius: 6px;
+    padding: 10px 20px;
     font-size: 0.95rem;
     font-weight: 600;
-    transition: background-color 0.2s ease;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
 }
 
 .btn-primary:hover {
     background-color: #0b5ed7;
+    box-shadow: 0 4px 10px rgba(13, 110, 253, 0.25);
 }
 
-/* Wrapper para permitir rolagem horizontal em telas pequenas */
+/* ==========================================================================
+   Tabela Customizada e Responsiva
+   ========================================================================== */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
 }
 
-/* Estilização da Tabela */
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 10px;
-}
-
-th, td {
-    padding: 14px 16px;
     text-align: left;
-    vertical-align: middle;
+    font-size: 0.95rem;
 }
 
+
+/* Estilização do Topo da Tabela (thead) */
 th {
     background-color: #f8f9fa;
     color: #495057;
     font-weight: 600;
-    border-bottom: 2px solid #dee2e6;
-    font-size: 0.95rem;
-}
-
-td {
-    border-bottom: 1px solid #e9ecef;
-    color: #333;
-    font-size: 0.95rem;
-}
-
-/* Alinhamento base para a tabela */
-th, td {
     padding: 14px 16px;
-    text-align: left;
+    border-bottom: 2px solid #dee2e6;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+/* Estilização das Linhas (tbody) */
+td {
+    padding: 16px;
+    border-bottom: 1px solid #e9ecef;
+    color: #495057;
     vertical-align: middle;
+    white-space: nowrap; /* Impede quebras de linhas feias no e-mail/login */
 }
 
-/* Alinha o título do cabeçalho "Ações" à direita */
-th.text-end, 
-td.text-end {
-    text-align: right;
-}
-
-/* Efeito Zebrado e Hover nas Linhas */
-tbody tr:nth-child(even) {
-    background-color: #fcfcfc;
-}
-
-tbody tr:hover {
-    background-color: #f1f3f5;
-}
-
-/* Estilo para tabela vazia */
-.empty-message {
-    text-align: center;
+/* Trata especificamente a coluna do Código (ID longo) */
+td:first-child {
+    font-family: monospace; /* Estilo de código para IDs/UUIDs */
     color: #6c757d;
-    padding: 20px;
-    font-style: italic;
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis; /* Corta o ID com '...' se for excessivamente longo */
 }
 
-/* --- NOVO: Célula que contém as ações (Editar / Excluir) --- */
-.actions-cell {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; /* Empurra os botões para a direita */
-    gap: 8px;
-    white-space: nowrap;
+/* Efeito de destaque ao passar o mouse na linha */
+tbody tr:hover {
+    background-color: #f8f9fa;
 }
 
-/* Estilização para as ações da tabela */
-.btn-action {
+/* ==========================================================================
+   Ações e Botões (Editar / Excluir)
+   ========================================================================== */
+th:last-child,
+td:last-child,
+.col-acoes {
+    text-align: right;
+    width: 180px; /* Largura fixa garantida para a coluna de ações */
+}
+
+.actions-group {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 4px;
-    transition: background-color 0.2s, color 0.2s;
-    font-size: 0.875rem;
-}
-
-/* Ação de Editar (Azul) */
-.btn-action.edit {
-    color: #0d6efd;
-}
-.btn-action.edit:hover {
-    background-color: #e7f1ff;
-}
-
-/* Ação de Excluir (Vermelho) */
-.btn-action.delete {
-    color: #dc3545;
-}
-.btn-action.delete:hover {
-    background-color: #f8d7da;
-}
-
-.col-acoes {
-    width: 15%;
-    text-align: center;
-}
-
-/* Agrupa os botões na horizontal */
-.actions-group {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px; /* Espaçamento entre os botões */
-}
-
-/* Estilização para as ações da tabela */
-.actions-cell {
-    white-space: nowrap;
-    text-align: center;
+    justify-content: flex-end;
+    gap: 8px; /* Espaçamento idêntico entre os botões */
 }
 
 .form-delete {
     display: inline;
-    margin: 0;
-    padding: 0;
 }
 
-.text-center {
-    text-align: center;
+/* Estilo Base dos botões de ação */
+.btn-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    height: 32px;
 }
 
-/* Ajustes para Responsividade */
-@media (max-width: 576px) {
-    .container {
-        padding: 20px;
-    }
-
-    .header-actions {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .btn-primary {
-        text-align: center;
-    }
-
-    th, td {
-        padding: 10px 12px;
-        font-size: 0.9rem;
-    }
+/* Botão Editar */
+.btn-action.edit {
+    background-color: #fff;
+    color: #0d6efd;
+    border-color: #0d6efd;
 }
+
+.btn-action.edit:hover {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+/* Botão Excluir */
+.btn-action.delete {
+    background-color: #fff;
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-action.delete:hover {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+
+

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html xmlns:th="thymeleaf.org">
+<html xmlns:th="[http://www.thymeleaf.org](http://www.thymeleaf.org)">
     <head>
         <title th:text="${titulo}"></title>
         <meta charset="UTF-8">
@@ -20,32 +20,59 @@
                 th:object ="${usuarioDTO}">
                 <h3 th:text="${titulo}" style="text-align: center;"></h3>
                 <input type="hidden" th:field="*{id}">
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label for="nome">Nome</label>
                     <input type="text" id="nome" th:field="*{nome}"
-                           required>
+                          th:classAppend="${#fields.hasErrors('nome')}? 'is-invalid': ''"/>    
+                    <!--Exibe a mensagem de erro específica do campo nome -->
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('nome')}" th:errors='*{nome}'>
+                        Erro no nome
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="login">Login</label>
                     <input type="text" id="login" th:field="*{login}"
-                           required>
+                          th:classAppend="${#fields.hasErrors('login')}? 'is-invalid': ''">
+                    <!-- Exibe a mensagem de erro específica do campo login -->
+                    <div class="invalid-feedback"
+                        th:if="${#fields.hasErrors('login')}" th:errors='*{login}'>
+                         Erro no login
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="senha">Senha</label>
-                    <input type="text" id="senha" th:field="*{senha}"
-                           required>
+                    <input type="password" id="senha" th:field="*{senha}"
+                           th:classAppend="${#fields.hasErrors('senha')}? 'is-invalid':''">
+                    <!--Exibe a mensagem de erro específica do campo senha -->
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('senha')}" th:errors='*{senha}'>
+                        Erro na senha
+                    </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group full-width">
                     <label for="email">Email</label>
                     <input type="email" id="email" th:field="*{email}"
-                           required>
+                           th:classAppend="${#fields.hasErrors('email')}? 'is-invalid':''">
+                    <!--Exibe a mensagem de erro específica do campo senha -->
+                    <div class="invalid-feedback"
+                        th:if="${#fields.hasErrors('email')}" th:errors='*{email}'>
+                               Erro no email
+                    </div>
+                  
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <select id="status" th:field="*{status}">
+                    <select id="status" th:field="*{status}"
+                            th:classAppend="${#fields.hasErrors('status')} ? 'is-invalid' : ''">
                         <option value="true">Ativo</option>
                         <option value="false">Inativo</option>
                     </select>
+                    <!--Exibe a mensagem de erro caso venha nulo -->
+                    <div class="invalid-feedback"
+                         th:if="${#fields.hasErrors('status')}" th:errors="*{status}">
+                        Erro no status!
+                    </div>
                 </div>
                 <div class="form-actions">
                     <a th:href="@{/usuarios}" class="btn-cancel">
