@@ -9,34 +9,28 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f6f9;
     color: #333;
-    /* Removido o display flex daqui */
-    /*display: flex; */
     min-height: 100vh;
     padding: 0;
 }
 
-/* NOVO: Container que vai centralizar o formulário na tela perfeitamente */
+/* Container que centraliza o formulário na tela */
 .main-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 70px); 
-    /* Desconta o tamanho aproximado da navbar */
+    min-height: calc(100vh - 70px);
     padding: 20px;
     width: 100%;
 }
 
-/* Container do formulário ajustado*/
+/* Container do formulário */
 form {
     background-color: #ffffff;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 450px; /* Garante boa legibilidade em telas grandes */
-    /* o container principal das páginas tenha uma margem superior 
-    para evitar sobreposição. */
-    /* removido o margin-top: 30px; */
+    max-width: 450px;
 }
 
 /* Título */
@@ -49,8 +43,8 @@ h3 {
     padding-bottom: 10px;
 }
 
-/* Agrupamento de campos */
-div {
+/* Agrupamento de campos (.form-group) */
+.form-group {
     margin-bottom: 20px;
 }
 
@@ -63,51 +57,124 @@ label {
     font-size: 0.95rem;
 }
 
-/* Campo de entrada */
-input[type="text"] {
+/* Estilização uniforme para Inputs e Select */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
     width: 100%;
     padding: 12px 14px;
     border: 1px solid #ced4da;
     border-radius: 6px;
     font-size: 1rem;
+    color: #333;
+    background-color: #ffffff;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
     outline: none;
+    font-family: inherit;
 }
 
-input[type="text"]:focus {
+/* Ajustes específicos para o elemento Select */
+select {
+    cursor: pointer;
+    appearance: none; /* Remove a seta padrão do SO */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    /* Adiciona uma seta customizada via imagem inline SVG */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%20495057' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 16px;
+    padding-right: 40px; /* Garante espaço para a seta não sobrepor o texto */
+}
+
+/* Estilização dos Options */
+option {
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* Estado de Foco (Inputs e Select) */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+select:focus {
     border-color: #0d6efd;
     box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.25);
 }
 
-/* Botão de envio */
-button[type="submit"] {
-    width: 100%;
-    padding: 12px;
+/* Container das ações (botões lado a lado) */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+/* Estilo base comum para os botões */
+.btn-submit,
+.btn-cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    box-sizing: border-box;
+    height: 42px;
+}
+
+/* Botão Salvar / Atualizar */
+.btn-submit {
     background-color: #0d6efd;
     color: #ffffff;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    border: 1px solid #0d6efd;
 }
 
-button[type="submit"]:hover {
+.btn-submit:hover {
     background-color: #0b5ed7;
+    border-color: #0a58ca;
+    box-shadow: 0 2px 6px rgba(13, 110, 253, 0.3);
 }
 
-button[type="submit"]:active {
+.btn-submit:active {
     background-color: #0a58ca;
 }
 
-/* Ajustes para telas muito pequenas */
+/* Botão Cancelar */
+.btn-cancel {
+    background-color: #6c757d;
+    color: #ffffff;
+    border: 1px solid #6c757d;
+}
+
+.btn-cancel:hover {
+    background-color: #5c636a;
+    border-color: #565e64;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(108, 117, 125, 0.3);
+}
+
+.btn-cancel:active {
+    background-color: #565e64;
+}
+
+/* Em telas pequenas (mobile), os botões ocupam a largura toda e ficam empilhados */
 @media (max-width: 480px) {
-    form {
-        padding: 20px;
+    .form-actions {
+        flex-direction: column-reverse;
     }
 
-    h3 {
-        font-size: 1.25rem;
+    .btn-submit,
+    .btn-cancel {
+        width: 100%;
     }
 }

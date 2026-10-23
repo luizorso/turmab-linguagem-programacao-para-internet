@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--Importação do arquivo styleListar.css -->
+        <link rel="stylesheet" th:href="@{/styleListar.css}">
+        <!-- Importação do arquivo navbar.css -->
+        <link rel="stylesheet" th:href="@{/navbar.css}">
+        <!-- Importação do Bootstrap Icons para exibir os ícones nos botões -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    </head>
+    <body>
+        <!-- Importação do menu Navbar -->
+        <div th:replace="~{fragments/navbar :: menu}"></div>
+        <div class="main-container">
+            <div class="container">
+                <div th:if="${mensagem}" style="color:green; font-weight:bold">
+                    <p th:text="${mensagem}"></p>
+                </div>
+                <div class="header-actions">
+                    <h3>Listagem de Usuários</h3>
+                    <a th:href="@{/usuarios/novo}" class="btn-primary">Novo Usuário</a>
+                </div>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th>Login</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th colspan="2">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="usuario : ${usuarios}" th:if="${usuario != null}">
+                                <td th:text="${usuario.id}"></td>
+                                <td th:text="${usuario.nome}"></td>
+                                <td th:text="${usuario.login}"></td>
+                                <td th:text="${usuario.email}"></td>
+                                <!-- Operador Ternário do Thymeleaf para o status -->
+                                <td th:text="${usuario.status} ? 'Ativo' : 'Inativo'"></td>
+                                <!-- Container flexível para alinhar os botões lado a lado sem quebra -->
+                                <td class= "col-acoes">
+                                    <!-- Contêiner flexível para alinhar os botões lado a lado sem quebra -->
+                                    <div class="actions-group">
+                                        <!--editar -->
+                                        <a th:href="@{/usuarios/editar/{id} (id=${usuario.id})}"
+                                           class="btn-action edit"
+                                           title="Editar Usuário">
+                                            <i class="bi bi-pencil-square"></i>
+                                            Editar
+                                        </a>
+                                        <!--Excluir (Formulário Inline) -->
+                                        <form th:action ="@{/usuarios/excluir/{id} (id=${usuario.id})}"
+                                              method="post"
+                                              class="form-delete">
+                                            <button type="submit" 
+                                                class="btn-action delete"
+                                                title="Excluir Usuário"
+                                                onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
+                                                <i class="bi bi-trash"></i>Excluir
+                                            </button>
+                                                
+                                    </div>
+                                </td>
+                            </tr>
+                                
+                        </tbody>
+                    </table>
+                    
+                    
+                    
+                </div>
+                
+            </div>
+        </div>
+    </body>
+</html>

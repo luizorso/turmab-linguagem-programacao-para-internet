@@ -9,16 +9,13 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f6f9;
     color: #333;
-    /* REMOVIDO o display: flex daqui para não alinhar a navbar de lado */
-    /*display: flex; */
     justify-content: center;
     align-items: flex-start;
     min-height: 100vh;
     padding: 0;
 }
 
-/* NOVO: Container que vai alinhar a tabela no 
-centro da tela abaixo da navbar */
+/* Container que vai alinhar a tabela no centro da tela abaixo da navbar */
 .main-container {
     display: flex;
     justify-content: center;
@@ -27,7 +24,7 @@ centro da tela abaixo da navbar */
     width: 100%;
 }
 
-/* Container principal da tabela ajustado*/
+/* Container principal da tabela */
 .container {
     background-color: #ffffff;
     padding: 30px;
@@ -35,10 +32,6 @@ centro da tela abaixo da navbar */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 1000px;
-    /* Removido o margin-top excessivo
-    <*margin-top: 30px; *>
-    /* o container principal das páginas tenha uma margem superior 
-    para evitar sobreposição. */
 }
 
 /* Cabeçalho da página e botão Novo */
@@ -91,6 +84,7 @@ table {
 th, td {
     padding: 14px 16px;
     text-align: left;
+    vertical-align: middle;
 }
 
 th {
@@ -105,6 +99,19 @@ td {
     border-bottom: 1px solid #e9ecef;
     color: #333;
     font-size: 0.95rem;
+}
+
+/* Alinhamento base para a tabela */
+th, td {
+    padding: 14px 16px;
+    text-align: left;
+    vertical-align: middle;
+}
+
+/* Alinha o título do cabeçalho "Ações" à direita */
+th.text-end, 
+td.text-end {
+    text-align: right;
 }
 
 /* Efeito Zebrado e Hover nas Linhas */
@@ -124,17 +131,29 @@ tbody tr:hover {
     font-style: italic;
 }
 
+/* --- NOVO: Célula que contém as ações (Editar / Excluir) --- */
+.actions-cell {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Empurra os botões para a direita */
+    gap: 8px;
+    white-space: nowrap;
+}
 
 /* Estilização para as ações da tabela */
 .btn-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
     font-weight: 500;
-    padding: 4px 8px;
+    padding: 6px 12px;
     border-radius: 4px;
     transition: background-color 0.2s, color 0.2s;
+    font-size: 0.875rem;
 }
 
-/* Ação de Editar (Azul/Grafite) */
+/* Ação de Editar (Azul) */
 .btn-action.edit {
     color: #0d6efd;
 }
@@ -148,6 +167,35 @@ tbody tr:hover {
 }
 .btn-action.delete:hover {
     background-color: #f8d7da;
+}
+
+.col-acoes {
+    width: 15%;
+    text-align: center;
+}
+
+/* Agrupa os botões na horizontal */
+.actions-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px; /* Espaçamento entre os botões */
+}
+
+/* Estilização para as ações da tabela */
+.actions-cell {
+    white-space: nowrap;
+    text-align: center;
+}
+
+.form-delete {
+    display: inline;
+    margin: 0;
+    padding: 0;
+}
+
+.text-center {
+    text-align: center;
 }
 
 /* Ajustes para Responsividade */
