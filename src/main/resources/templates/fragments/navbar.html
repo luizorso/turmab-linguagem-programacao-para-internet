@@ -1,38 +1,62 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-       
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+        
+        <!-- Definição do fragmento reaproveitável pelo Thymeleaf -->
         <nav th:fragment="menu" class="navbar">
             <ul class="menu-main">
-                <!--Mapeia para a rota do HomeController (@GetMapping('/') -->
-                <li><a th:href="@{/}">Início</a></li>
-                <!-- item principal: Perfil -->
+                
+                <!-- Rota Raiz (HomeController) -->
+                <li>
+                    <a th:href="@{/}">
+                        <i class="bi bi-house-door" style="margin-right: 5px;"></i>Início
+                    </a>
+                </li>
+                
+                <!-- Submenu: Perfis de Acesso -->
                 <li class="has-submenu">
-                    <a href="#">Perfil<span class="arrow"></span></a>
+                    <a href="#">
+                        <i class="bi bi-shield-lock" style="margin-right: 5px;"></i>Perfis<span class="arrow"></span>
+                    </a>
                     <ul class="submenu">
                         <li>
-                            <a th:href="@{/perfis}">Listar Perfis</a>
+                            <a th:href="@{/perfis}">
+                                <i class="bi bi-list-ul" style="margin-right: 6px;"></i>Listar Perfis
+                            </a>
                         </li>
                         <li>
-                            <a th:href="@{/usuarios/novo}">Novo Perfil</a>
+                            <a th:href="@{/perfis/novo}">
+                                <i class="bi bi-plus-circle" style="margin-right: 6px;"></i>Novo Perfil
+                            </a>
                         </li>
                     </ul>
                 </li>
-                <!-- Item Principal: Usuário -->
+                
+                <!-- Submenu: Gerenciamento de Usuários -->
                 <li class="has-submenu">
-                    <a href="#">Usuario<span class="arrow"></span></a>
+                    <a href="#">
+                        <i class="bi bi-people" style="margin-right: 5px;"></i>Usuários<span class="arrow"></span>
+                    </a>
                     <ul class="submenu">
-                        <li><a th:href="@{/usuarios}">Listar Usuários</a></li>
-                        <li><a th:href="@{/usuarios/novo}">Cadastrar Usuário</a></li>
+                        <li>
+                            <a th:href="@{/usuarios}">
+                                <i class="bi bi-list-ol" style="margin-right: 6px;"></i>Listar Usuários
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/usuarios/novo}">
+                                <i class="bi bi-person-plus" style="margin-right: 6px;"></i>Novo Usuário
+                            </a>
+                        </li>
                     </ul>
-                    
                 </li>
+                
             </ul>
         </nav>
+        
     </body>
 </html>

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
+        <title>Listagem de Usuários</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!--Importação do arquivo styleListar.css -->
+        <!-- Importação do arquivo styleListar.css -->
         <link rel="stylesheet" th:href="@{/styleListar.css}">
         <!-- Importação do arquivo navbar.css -->
         <link rel="stylesheet" th:href="@{/navbar.css}">
@@ -17,13 +16,19 @@
         <div th:replace="~{fragments/navbar :: menu}"></div>
         <div class="main-container">
             <div class="container">
-                <div th:if="${mensagem}" style="color:green; font-weight:bold">
+
+                <!-- Alertas de Feedback (Sucesso / Exclusão) -->
+                <div th:if="${mensagem}" class="alert alert-success">
                     <p th:text="${mensagem}"></p>
                 </div>
+
                 <div class="header-actions">
                     <h3>Listagem de Usuários</h3>
-                    <a th:href="@{/usuarios/novo}" class="btn-primary">Novo Usuário</a>
+                    <a th:href="@{/usuarios/novo}" class="btn-primary">
+                        <i class="bi bi-person-plus-fill" style="margin-right: 8px;"></i>Novo Usuário
+                    </a>
                 </div>
+
                 <div class="table-responsive">
                     <table>
                         <thead>
@@ -32,8 +37,9 @@
                                 <th>Nome</th>
                                 <th>Login</th>
                                 <th>Email</th>
+                                <th>Perfis</th>
                                 <th>Status</th>
-                                <th colspan="2">Ações</th>
+                                <th style="text-align: center;">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -42,42 +48,51 @@
                                 <td th:text="${usuario.nome}"></td>
                                 <td th:text="${usuario.login}"></td>
                                 <td th:text="${usuario.email}"></td>
+
+                                <!-- Exibição dos Perfis Vinculados (Badges) -->
+                                <td>
+                                    <div class="profiles-badge-group">
+                                        <span th:each="up : ${usuario.perfis}" 
+                                              th:text="${up.perfil.nome}" 
+                                              class="badge-perfil"></span>
+                                        <span th:if="${#lists.isEmpty(usuario.perfis)}" 
+                                              class="no-profile-text">Nenhum</span>
+                                    </div>
+                                </td>
+
                                 <!-- Operador Ternário do Thymeleaf para o status -->
-                                <td th:class="${usuario.status} ? 'status-badge status-ativo' : 'status-badge status-inativo'" 
-                                    th:text="${usuario.status} ? 'Ativo' : 'Inativo'"></td>
-                                <!-- Container flexível para alinhar os botões lado a lado sem quebra -->
-                                <td class= "col-acoes">
-                                    <!-- Contêiner flexível para alinhar os botões lado a lado sem quebra -->
+                                <td>
+                                    <span th:class="${usuario.status} ? 'status-badge status-ativo' : 'status-badge status-inativo'" 
+                                          th:text="${usuario.status} ? 'Ativo' : 'Inativo'"></span>
+                                </td>
+
+                                <td class="col-acoes">
                                     <div class="actions-group">
-                                        <!--editar -->
+                                        <!-- Editar -->
                                         <a th:href="@{/usuarios/editar/{id} (id=${usuario.id})}"
                                            class="btn-action edit"
                                            title="Editar">
-                                            <i class="bi bi-pencil-square"></i>
-                                            Editar
+                                            <i class="bi bi-pencil-square"></i> Editar
                                         </a>
-                                        <!--Excluir (Formulário Inline) -->
-                                        <form th:action ="@{/usuarios/excluir/{id} (id=${usuario.id})}"
+
+                                        <!-- Excluir -->
+                                        <form th:action="@{/usuarios/excluir/{id} (id=${usuario.id})}"
                                               method="post"
                                               class="form-delete">
                                             <button type="submit" 
-                                                class="btn-action delete"
-                                                title="Excluir"
-                                                onclick="return confirm('Tem certeza que deseja excluir este usuário?');">
-                                                <i class="bi bi-trash"></i>Excluir
+                                                    class="btn-action delete"
+                                                    title="Excluir"
+                                                    onclick="return confirm('Tem certeza que deseja excluir este utilizador?');">
+                                                <i class="bi bi-trash"></i> Excluir
                                             </button>
-                                                
+                                        </form>
                                     </div>
                                 </td>
                             </tr>
-                                
                         </tbody>
                     </table>
-                    
-                    
-                    
                 </div>
-                
+
             </div>
         </div>
     </body>

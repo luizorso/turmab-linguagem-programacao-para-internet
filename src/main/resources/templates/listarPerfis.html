@@ -1,78 +1,79 @@
 <!DOCTYPE html>
-
-<html xmlns:th="http://thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>listarPerfis</title>
+        <title>Listagem de Perfis</title>
         <meta charset="UTF-8">
-        <meta name="viewport" 
-              content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Importação do arquivo styleListar.css -->
         <link rel="stylesheet" th:href="@{/styleListar.css}">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-          <!-- Css da Navbar -->
+        <!-- Importação do arquivo navbar.css -->
         <link rel="stylesheet" th:href="@{/navbar.css}">
+        <!-- Importação do Bootstrap Icons para exibir os ícones nos botões -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     </head>
     <body>
          <!-- Importação do menu Navbar -->
         <div th:replace="~{fragments/navbar :: menu}"></div>
         <div class="main-container">
-        <div class="container">
-            <div th:if="${mensagem}" style="color: green; 
-                 font-weight: bold">
-                <p th:text="${mensagem}"></p>
-            </div>
-            <div class="header-actions">
-                <h3>Listagem de Perfis</h3>
-                <a th:href="@{/perfis/novo}"
-                   class="btn-primary">Novo Perfil
-                </a>
-            </div>
-            <div class="table-responsive">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Nome</th>
-                            <th colspan="2">Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="perfil : ${perfis}"
-                            th:if="${perfil != null}">
-                            <td th:text="${perfil?.id}"></td>
-                            <td th:text="${perfil?.nome}"></td>
-                            <!-- Container flexível para alinhar os botões lado a lado sem quebra -->
-                            <td class="col-acoes">
-                                <div class="actions-group">
-                                    <a th:href="@{/perfis/editar/{id} (id=${perfil.id})}"
-                                        class="btn-action edit"
-                                        title="Editar">
-                                            <i class="bi bi-pencil-square"></i>
-                                                Editar
-                                    </a>
-                                    <form th:action="@{/perfis/excluir/{id} (id=${perfil.id})}" 
-                                            method="post"
-                                            class="form-delete">
-                                        <button type="submit"
-                                            class="btn-action delete"
-                                            title="Excluir"
-                                            onclick="return confirm('Tem certeza que deseja excluir este Perfil?');">
-                                            <i class="bi bi-trash"></i>
-                                            excluir
-                                        </button>
-                                    </form>
-                                </div>
-                              
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="container">
                 
+                <!-- Alertas de Feedback da Operação (Sucesso ou Violação de Chave Estrangeira) -->
+                <div th:if="${mensagem}" class="alert alert-success">
+                    <p th:text="${mensagem}"></p>
+                </div>
+                <div th:if="${erro}" class="alert alert-danger">
+                    <p th:text="${erro}"></p>
+                </div>
                 
-            </div>
-          
-            
-            
-        </div><!- fecha da div container -->
-        </div><!-- fecha da div main-container -->
+                <div class="header-actions">
+                    <h3>Listagem de Perfis</h3>
+                    <a th:href="@{/perfis/novo}" class="btn-primary">
+                        <i class="bi bi-plus-lg" style="margin-right: 8px;"></i>Novo Perfil
+                    </a>
+                </div>
+                
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Nome</th>
+                                <th style="text-align: center;">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="perfil : ${perfis}" th:if="${perfil != null}">
+                                <td th:text="${perfil.id}"></td>
+                                <td th:text="${perfil.nome}"></td>
+                                
+                                <td class="col-acoes">
+                                    <div class="actions-group">
+                                        <!-- Botão Editar -->
+                                        <a th:href="@{/perfis/editar/{id} (id=${perfil.id})}"
+                                           class="btn-action edit"
+                                           title="Editar">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                        
+                                        <!-- Botão Excluir (Formulário Inline) -->
+                                        <form th:action="@{/perfis/excluir/{id} (id=${perfil.id})}" 
+                                              method="post"
+                                              class="form-delete">
+                                            <button type="submit"
+                                                class="btn-action delete"
+                                                title="Excluir"
+                                                onclick="return confirm('Tem certeza que deseja excluir este Perfil?');">
+                                                <i class="bi bi-trash"></i> Excluir
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div> <!-- fecha a div container -->
+        </div> <!-- fecha a div main-container -->
     </body>
 </html>

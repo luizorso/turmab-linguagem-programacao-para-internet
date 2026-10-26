@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title th:text="${titulo}">Cadastro de Perfil</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- Importação do arquivo styleForm.css -->
         <link rel="stylesheet" th:href="@{/styleForm.css}">
-           <!-- Css da Navbar -->
+        <!-- Css da Navbar -->
         <link rel="stylesheet" th:href="@{/navbar.css}">
         <!-- Importação do Bootstrap Icons para exibir os ícones nos botões -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -16,38 +16,39 @@
         <div th:replace="~{fragments/navbar :: menu}"></div>
         
         <div class="main-container">
-        <form th:action="@{/perfis/salvar}"
-              th:object="${perfilDTO}"
-              method="post">
-            <h3 th:text="${titulo}">Cadastro de Perfil</h3>
-            <input type="hidden" th:field="*{id}">
-            <div class="form-group full-width">
-                <label for="nome">Nome</label>
-                <input type="text" 
-                       th:field="*{nome}" 
-                       id="nome"
-                       th:classAppend="${#fields.hasErrors('nome')}? 'is-invalid': ''">
-                <!--Exibe a mensagem de erro específica do campo Login -->
-                <div class="invalid-feedback"
-                     th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
-                    Erro no nome
+            <!-- Formulário de cadastro/edição integrado com o DTO -->
+            <form th:action="@{/perfis/salvar}" th:object="${perfilDTO}" method="post">
+                
+                <h3 th:text="${titulo}" style="text-align: center; margin-bottom: 20px;"></h3>
+                
+                <!-- ID oculto monitorado pelo Thymeleaf para identificar atualizações -->
+                <input type="hidden" th:field="*{id}">
+                
+                <div class="form-group full-width">
+                    <label for="nome">Nome do Perfil</label>
+                    <input type="text" 
+                           th:field="*{nome}" 
+                           id="nome"
+                           placeholder="Ex: ADMINISTRADOR, OPERADOR"
+                           th:classAppend="${#fields.hasErrors('nome')} ? 'is-invalid' : ''">
+                    
+                    <!-- Exibe a mensagem de erro de validação (ou nome duplicado vindo do Service) -->
+                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}">
+                        Erro no nome
+                    </div>
                 </div>
-            </div>
-            <div class="form-actions">
-                  <a th:href="@{/perfis}" class="btn-cancel">
-                      <i class="bi bi-x-circle"></i>
-                      Cancelar
-                  </a>
-                <button type="submit" class="btn-submit">
-                    <i class="bi bi-check-lg"></i>
-                    <span th:text="${perfilDTO.id != null ? 'Atualizar' : 'Salvar'}">
-                    </span>
-                </button>
-              
-            </div>
-            
-            
-        </form>
+                
+                <div class="form-actions">
+                    <a th:href="@{/perfis}" class="btn-cancel">
+                        <i class="bi bi-x-circle"></i> Cancelar
+                    </a>
+                    <button type="submit" class="btn-submit">
+                        <i class="bi bi-check-lg"></i>
+                        <span th:text="${perfilDTO.id != null ? 'Atualizar' : 'Salvar'}"></span>
+                    </button>
+                </div>
+                
+            </form>
         </div>
     </body>
 </html>

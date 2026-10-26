@@ -1,96 +1,108 @@
 package com.cepestm.turmab.dto;
 
 import com.cepestm.turmab.entity.Usuario;
+import com.cepestm.turmab.entity.UsuarioPerfil;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
-
 
 public record UsuarioDTO(
     UUID id,
-    @NotBlank(message = "O nome é obrigatório!")
-    @Size(min = 3, max = 100, message = "O nome deve ter entre 3 e 100 caracteres!")
-    /*
-    Aceita todas as letras maiúsculas, minúsculas, com acentos (como ã, é, ç, ó) comuns 
-    na língua portuguesa e espaços entre os nomes, bloqueando números e caracteres 
-    especiais indesejados.
-    */
-    @Pattern(
-        regexp = "^[A-Za-zÀ-ÖØ-öø-ÿ\\s]+$", 
-        message = "O nome deve conter apenas letras e espaços!"
-    )
+    
+    @NotBlank(message = "O nome é obrigatório")
+    @Size(max = 100, message = "O nome não deve exceder 100 caracteres")
     String nome,
-    @NotBlank(message="O nome login do usuário é obrigatório!")
-    @Size(min =8, max = 16, message = "O login do usuário deve ter entre 8 e 16 caracteres!")
+    
+    @NotBlank(message = "O login é obrigatório")
+    @Size(max = 100, message = "O login não deve exceder 100 caracteres")
     String login,
-    @NotBlank(message="A senha é obrigatória!")
-    @Size(min = 8, max = 256, message="A senha deve ter no mínimo 8 caracteres")
+    
+    @NotBlank(message = "A senha é obrigatória")
+    @Size(max = 256, message = "A senha não deve exceder 256 caracteres")
+    String senha,
+    
+    @NotBlank(message = "O e-mail é obrigatório")
+    @Email(message = "Insira um e-mail válido")
+    @Size(max = 150, message = "O e-mail não deve exceder 150 caracteres")
+    String email,
+    
+    boolean status,
+    
+    // Adicionado o campo para que o Thymeleaf consiga ler na view (caso precise)
+    List<UsuarioPerfil> perfis,
+    
+    // Campo adicionado para receber os IDs selecionados no <select multiple> do formulário
     /*
-    A regex utilizada (^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&._-]).+$) 
-    valida cada exigência através de "olhadas adiante" (lookaheads):
-
-    ^(?=.*[a-z]): Garante que existe pelo menos uma letra minúscula de a a z.
-
-    (?=.*[A-Z]): Garante que existe pelo menos uma letra maiúscula de A a Z.
-
-    (?=.*\d): Garante que existe pelo menos um número (\d).
-
-    (?=.*[@$!%*?&._-]): Garante que existe pelo menos um caractere especial 
-    dentre os colchetes (você pode adicionar ou remover símbolos conforme a 
-    política de segurança da sua aplicação).
-
-    .+$: Garante que a string possui conteúdo válido após validar as regras acima 
-    (o tamanho mínimo e máximo já está sendo controlado de forma limpa pelo 
-    seu @Size).
+    Adicionado List<String> perfisIds: Este componente é o responsável por fazer o binding 
+    direto com o atributo th:field="*{perfisIds}" que definimos no elemento 
+    <select multiple> do Thymeleaf.
+    */
+   // Alterado de List<UUID> para List<String> para corresponder aos valores textuais do HTML
+    List<String> perfisIds
+) {
+    
+    // Construtor utilitário para cadastros novos (Cria a lista vazia automaticamente)
+    public UsuarioDTO(String nome, String login, String senha, String email, boolean status) {
+        this(null, nome, login, senha, email, status, new ArrayList<>(), new ArrayList<>());
+    }
+    
+    // Construtor de conversão (Utilizado no método editarUsuario do seu Controller)
+    /* Atualização dos Construtores: Como o record exige que todos os parâmetros do 
+    cabeçalho principal sejam informados, ajustamos os construtores secundários 
+    (this(...)) para passar valores padrão (como new ArrayList<>()) para os campos 
+    perfis e perfisIds.
     
     */
-    @Pattern(
-        regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&._-]).+$",
-        message = "A senha deve conter ao menos uma letra minúscula, uma maiúscula, um número e um caractere especial (@$!%*?&._-)!"
-    )
-    String senha,
-   @NotBlank(message = "O e-mail é obrigatório!")
-    @Email(message = "Informe um e-mail válido!")
-    @Size(min = 6, max = 100, message = "O e-mail deve ter entre 6 e 100 caracteres!")
-    String email,
-   
-   @NotNull(message = "O status é obrigatório!")
-    Boolean status
-    ) 
-{
-    //Construtor utilitário para cadastrar novos usuarios sem o ID
-    
-    public UsuarioDTO(String nome, String login, String senha, 
-            String email, boolean status){
-        this(null, nome, login, senha, email, status);
-    }
-    
-    /*Construtor para Transformar Entidade em DTO Facilmente */
-    
-    public UsuarioDTO(Usuario usuario){
+  // CONSTRUTOR DE CONVERSÃO ATUALIZADO PARA EDIÇÃO
+    /* Permite que os perfis previamentes atribuidos aos usuários sejam exibidos
+     no select múltiplo ao abrir a tela de edição
+     
+    */
+// CONSTRUTOR DE CONVERSÃO PARA EDIÇÃO
+  // CONSTRUTOR DE CONVERSÃO PARA EDIÇÃO (Padrão Java seguro, sem preview)
+    public UsuarioDTO(Usuario usuario) {
         this(
-        usuario.getId(),
-        usuario.getNome(),
-        usuario.getLogin(),
-        usuario.getSenha(),
-        usuario.getEmail(),
-        usuario.isStatus()
+            usuario.getId(),
+            usuario.getNome(),
+            usuario.getLogin(),
+            usuario.getSenha(),
+            usuario.getEmail(),
+            usuario.isStatus(),
+            usuario.getPerfis(), 
+            extrairIdsPerfis(usuario.getPerfis())
         );
+        // ADICIONE ESTA LINHA:
+    System.out.println(">>> DTO CRIADO PARA: " + usuario.getNome() + " | IDs dos Perfis: " + extrairIdsPerfis(usuario.getPerfis()));
     }
     
-    public Usuario toUsuario(){
-        Usuario u = new Usuario();
-        u.setId(this.id);
-        u.setNome(this.nome);
-        u.setLogin(this.login);
-        u.setSenha(this.senha);
-        u.setEmail(this.email);
-        u.setStatus(this.status);
-        return u;
+    // Método auxiliar para tratar a extração dos IDs sem violar as regras de construtor do Java
+    private static List<String> extrairIdsPerfis(List<UsuarioPerfil> perfis) {
+        if (perfis == null) {
+            return new ArrayList<>();
+        }
+        return perfis.stream()
+                     .map(up -> up.getPerfil().getId().toString()) // Converte o UUID para String
+                     .toList();
     }
     
-
+    /*
+    O método toUsuario() serve para converter (ou mapear) um objeto do tipo atual 
+    (geralmente um DTO ou Form) em uma entidade do tipo Usuario
+    */
+    public Usuario toUsuario() {
+        Usuario usuario = new Usuario();
+        usuario.setId(id);
+        usuario.setNome(nome);
+        usuario.setLogin(login);
+        usuario.setSenha(senha);
+        usuario.setEmail(email);
+        usuario.setStatus(status);
+        // O relacionamento em cascata é gerenciado via métodos auxiliares
+        return usuario;
+    }
+    
+    
 }
