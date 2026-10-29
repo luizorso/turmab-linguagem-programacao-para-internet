@@ -27,9 +27,10 @@
                 color: #991b1b;
                 border: 1px solid #fca5a5;
             }
-            /* Ajuste opcional para o select múltiplo não ficar muito apertado */
+         
+          /* Ajuste para exibir mais perfis de uma vez sem precisar de rolagem */
             select[multiple] {
-                height: 120px;
+                height: 170px; 
                 padding: 6px;
             }
         </style>
@@ -95,14 +96,23 @@
                     </div>
                 </div>
 
+
+
                 <!-- Campo de Seleção Múltipla de Perfis integrado ao formulário principal -->
+                <!-- 
+                perfisDoUsuario.![toLowerCase()]: Esta é uma projeção do Spring Expression Language (SpEL). Ela pega a sua lista de IDs do John Lennon e transforma todas as Strings internas em letras minúsculas de uma vez só
+                p.id.toString().toLowerCase(): Garante que o ID do perfil que está sendo renderizado no loop também seja convertido para letras minúsculas antes da comparação
+                -->
+                
+                
                 <div class="form-group full-width">
                     <label for="perfis">Perfis de Acesso</label>
-                    <select id="perfis" name="perfisIds" multiple>
+                    <!-- Usamos o 'name' para que os dados sejam mapeados corretamente no POST ao salvar -->
+                    <select id="perfis" name="perfisIds" multiple="multiple">
                         <option th:each="p : ${todosPerfis}"
                                 th:value="${p.id}"
                                 th:text="${p.nome}"
-                                th:selected="${usuarioDTO.perfisIds != null and usuarioDTO.perfisIds.contains(p.id.toString())}">
+                                th:selected="${perfisDoUsuario != null and #lists.contains(perfisDoUsuario.![toLowerCase()], p.id.toString().toLowerCase())}">
                         </option>
                     </select>
                     <small style="color: #64748b; margin-top: 4px; display: block;">

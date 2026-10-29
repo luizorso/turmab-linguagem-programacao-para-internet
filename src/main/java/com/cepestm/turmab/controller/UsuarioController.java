@@ -150,7 +150,8 @@ public String salvarUsuario(@Valid @ModelAttribute("usuarioDTO")
         UsuarioDTO dto = new UsuarioDTO(usuario); 
         
         // ADICIONE ESTA LINHA:
-        System.out.println(">>> CONTROLLER - Qtd PerfisIds no DTO: " + dto.perfisIds().size());
+        System.out.println(">>> CONTROLLER - Qtd PerfisIds no DTO: " + 
+                dto.perfisIds().size());
         
         model.addAttribute("titulo", "Editar Usuário");
         model.addAttribute("usuarioDTO", dto);
@@ -158,6 +159,9 @@ public String salvarUsuario(@Valid @ModelAttribute("usuarioDTO")
         //Usa o objeto perfilService que foi injetado pelo construtor
         model.addAttribute("todosPerfis", perfilService.listAll()); 
         
+        // ADICIONE ESTA LINHA EXPLICITAMENTE NO MODEL:
+    // Enviamos a lista de Strings diretamente para que o HTML use sem depender das limitações do Record
+        model.addAttribute("perfisDoUsuario", dto.perfisIds());
         return "cadastrarUsuario";
     }
 
